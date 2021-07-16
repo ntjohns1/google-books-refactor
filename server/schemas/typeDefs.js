@@ -1,17 +1,23 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`     
-    type Category {
-        categoryId: ID!
-        categoryName: String!
+    type Book {
+        _id: ID!
+        bookId: ID!
+        authors: [String]
+        descritpion: String!
+        image: String
+        link: String
+        title: String
     }
     
     type User {
         _id: ID!
         username: String!
+        email: String
         password: String!
-        email: String!
-        productCount: Int
+        bookCount: Int
+        savedBooks:[Book]
         
     }
 
@@ -24,41 +30,23 @@ const typeDefs = gql`
         me: User
         users: [User]
         user(_id: String, username: String): User
-        products: [Product]!
-        product(productId: ID!): Product
     }
 
-    type GM {
-        _id: ID!
-        name: String!
-        password: String!
-        email: String!
+    input BookInput {
+        Autors: [String]
+        description: String!
+        title: String!
+        bookId: String!
+        image: String
+        link: String
     }
 
     type Mutation {
         login (email: String!, password: String!): Auth
         addUser(username: String!, email: String!, password: String!): Auth
-        addProduct(productName: String!, price: String!, stock: String!, description: String!): Product
-        addComment(productId: ID!, commentText: String!): Product
-        removeProduct(productId: ID!): Product
-        removeComment(productId: ID!, commentId: ID!): Product
+       saveBook(input: BookInput!): User
+       removeBook (bookId: String!): User
     }
-
-    type Product {
-        _id: ID
-        productName: String
-        price: String
-        stock: String
-        description: String
-        createdAt: String
-        comments: [Comment]!
-      }
-    
-      type Comment {
-        _id: ID
-        commentText: String
-        createdAt: String
-      }
 `;
 
 module.exports = typeDefs;
