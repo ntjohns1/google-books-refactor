@@ -6,19 +6,16 @@ query {
         _id
         username
         email
+        bookCount
+        savedBooks {
+            bookiId
+            authors
+            description
+            image
+            link
+            title      
         }
     }
+}
 `;
 
-export const QUERY_PRODUCTS = gql`
-  query getProducts {
-    products {
-      _id
-      productName
-      price
-      stock
-      description
-      createdAt
-    }
-  }
-`;
